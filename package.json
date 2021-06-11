@@ -1,0 +1,22 @@
+{
+  "name": "simple-store-manager",
+  "version": "1.0.0",
+  "description": "Sistema de gerenciamento de estabelecimentos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabriel-nlima/simple-store-manager.git"
+  },
+  "author": "Gabriel Nascimento Lima",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gabriel-nlima/simple-store-manager/issues"
+  },
+  "homepage": "https://github.com/gabriel-nlima/simple-store-manager#readme",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
