@@ -15,6 +15,7 @@ import authRoutes from './routes/auth.js'
 import authDecorators from './decorators/auth.js'
 import userDecorators from './decorators/database/user.js'
 import tokenValidator from './hooks/auth.js'
+import usersRoutes from './routes/users.js'
 
 const server = Fastify({
   logger: {
@@ -57,7 +58,7 @@ server.register(
       tokenValidator(secureInstance)
 
       // secured routes
-      // TODO others routes
+      secureInstance.register(usersRoutes)
       sNext()
     })
 

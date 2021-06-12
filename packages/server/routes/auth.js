@@ -16,7 +16,6 @@ export default function authRoutes(server, opts, next) {
 
         const isEqual = await server.comparePasswords(password, user.password)
         if (isEqual) {
-          delete user.password
           const tokens = await server.generateTokens(server, user.email)
           return reply.send({ user, ...tokens })
         }

@@ -1,7 +1,10 @@
-export async function findUserByEmail(server, email) {
+export async function findUserByEmail(server, email, removePassword = true) {
   const { db } = server.mongo
+
+  const projection = removePassword ? { password: 0 } : undefined
+
   const col = await db.collection(server.collections.USERS)
-  const user = await col.findOne({ email })
+  const user = await col.findOne({ email }, { projection })
 
   // retorna a collection para fazer outras operações no banco
   return { user, col }
