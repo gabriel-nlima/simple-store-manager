@@ -4,14 +4,17 @@ import fastifyJWT from 'fastify-jwt'
 import fastifyMongodb from 'fastify-mongodb'
 import fastifySensible from 'fastify-sensible'
 import { userBodySchema } from './schemas/user.js'
-import {
+import databaseDecorators, {
   COLLECTIONS,
   create,
   update,
   stringToId,
   initIndexes,
-} from './database/base.js'
+} from './decorators/database/base.js'
 import authRoutes from './routes/auth.js'
+import authDecorators from './decorators/auth.js'
+import userDecorators from './decorators/database/user.js'
+import tokenValidator from './hooks/auth.js'
 
 const server = Fastify({
   logger: {
@@ -19,6 +22,7 @@ const server = Fastify({
     prettyPrint: true,
   },
 })
+
 // shared schemas
 server.addSchema(userBodySchema)
 
@@ -36,15 +40,26 @@ server.register(fastifyMongodb, {
   useUnifiedTopology: true,
 })
 
-server.decorate('insert', create)
-server.decorate('update', update)
-server.decorate('collections', COLLECTIONS)
-server.decorate('stringToId', stringToId)
+databaseDecorators(server)
 
 server.register(
   function (instance, opts, next) {
-    instance.decorate('userEmail', '')
+    // api decoratos
+    authDecorators(instance)
+    userDecorators(instance)
+
+    // api routes
     instance.register(authRoutes)
+
+    // secure api routes
+    instance.register(function (secureInstance, secureOpts, sNext) {
+      // validator hook
+      tokenValidator(secureInstance)
+
+      // secured routes
+      // TODO others routes
+      sNext()
+    })
 
     next()
   },

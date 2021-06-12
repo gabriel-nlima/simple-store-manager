@@ -14,14 +14,14 @@ export const loginSchema = S.object()
     S.object().prop(
       '2xx',
       S.object()
-        .prop('user', S.ref('userBody#'))
+        .prop('user', S.ref('#userBody'))
         .prop('refreshToken', S.string())
         .prop('accessToken', S.string())
     )
   )
 
 export const userBodySchema = S.object()
-  .id('userBody')
+  .id('#userBody')
   .prop('email', S.string())
   .required()
   .prop('name', S.string())
@@ -30,7 +30,7 @@ export const userBodySchema = S.object()
   .prop('password', S.string())
 
 export const registerSchema = S.object()
-  .prop('body', S.ref('userBody#'))
+  .prop('body', S.ref('#userBody').required())
   .prop(
     'response',
     S.object().prop(

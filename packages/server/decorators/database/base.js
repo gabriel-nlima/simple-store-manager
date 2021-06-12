@@ -1,6 +1,3 @@
-import mongo from 'mongodb'
-const { ObjectID, Collection, Db } = mongo
-
 export const COLLECTIONS = {
   USERS: 'users',
   ESTABLISHMENT: 'establishment',
@@ -9,10 +6,7 @@ export const COLLECTIONS = {
 export function stringToId(id) {
   return new ObjectID(id)
 }
-/**
- * @param {ObjectID} id
- * @returns {string}
- */
+
 export function idToString(id) {
   return id.toHexString()
 }
@@ -24,19 +18,12 @@ export function beforeCreate(document) {
 export function beforeUpdate(document) {
   return { ...document, updatedAt: Date.now() }
 }
-/**
- * @param {Collection} collection
- * @param {Object} document
- */
+
 export async function create(collection, document) {
   const result = await collection.insertOne(beforeCreate(document))
   return result.ops[0]
 }
 
-/**
- * @param {Collection} collection
- * @param {Object} document
- */
 export async function update(collection, document) {
   const result = await collection.findOneAndUpdate(
     { _id: stringToId(document._id) },
@@ -46,13 +33,17 @@ export async function update(collection, document) {
   return result.value
 }
 
-/**
- * @param {Db} db
- */
 export async function initIndexes(db) {
   await db.createIndex(
     COLLECTIONS.USERS,
     { email: 1 },
     { unique: true, background: true }
   )
+}
+
+export default function databaseDecorators(server) {
+  server.decorate('insert', create)
+  server.decorate('update', update)
+  server.decorate('collections', COLLECTIONS)
+  server.decorate('stringToId', stringToId)
 }
