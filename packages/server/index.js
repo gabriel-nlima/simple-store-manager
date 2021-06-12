@@ -1,22 +1,62 @@
-const fastify = require('fastify')({
-  logger: true,
-})
+import Fastify from 'fastify'
+import fastifyHelmet from 'fastify-helmet'
+import fastifyJWT from 'fastify-jwt'
+import fastifyMongodb from 'fastify-mongodb'
+import fastifySensible from 'fastify-sensible'
+import { userBodySchema } from './schemas/user.js'
+import {
+  COLLECTIONS,
+  create,
+  update,
+  stringToId,
+  initIndexes,
+} from './database/base.js'
+import authRoutes from './routes/auth.js'
 
-fastify.register(require('fastify-sensible'))
-fastify.register(require('fastify-helmet'))
-fastify.register(require('fastify-jwt'), {
+const server = Fastify({
+  logger: {
+    level: 'info',
+    prettyPrint: true,
+  },
+})
+// shared schemas
+server.addSchema(userBodySchema)
+
+// plugins
+server.register(fastifySensible)
+server.register(fastifyHelmet)
+server.register(fastifyJWT, {
   secret: 'sgessecret@2021',
 })
-
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' }
+server.register(fastifyMongodb, {
+  forceClose: true,
+  useNewUrlParser: true,
+  database: '_sges',
+  url: 'mongodb://localhost:27017/_sges',
+  useUnifiedTopology: true,
 })
+
+server.decorate('insert', create)
+server.decorate('update', update)
+server.decorate('collections', COLLECTIONS)
+server.decorate('stringToId', stringToId)
+
+server.register(
+  function (instance, opts, next) {
+    instance.decorate('userEmail', '')
+    instance.register(authRoutes)
+
+    next()
+  },
+  { prefix: '/api' }
+)
 
 const start = async () => {
   try {
-    await fastify.listen(8080)
+    await server.listen(8080)
+    await initIndexes(server.mongo.db)
   } catch (err) {
-    fastify.log.error(err)
+    server.log.error(err)
     process.exit(1)
   }
 }
