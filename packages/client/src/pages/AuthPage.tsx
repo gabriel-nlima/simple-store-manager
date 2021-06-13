@@ -8,7 +8,8 @@ import {
   PageContainer,
 } from '../components/containers'
 import Logo from '../components/logo'
-import { RouteComponentProps } from 'react-router-dom'
+import { Redirect, RouteComponentProps } from 'react-router-dom'
+import RegisterForm from '../components/auth/RegisterForm'
 
 const LOGIN = 'LOGIN'
 const REGISTER = 'REGISTER'
@@ -19,15 +20,10 @@ const tablist: CardTabListType[] = [
 
 const AuthPage = ({ history }: RouteComponentProps) => {
   const [activeTab, setActiveTab] = useState(LOGIN)
-  const { login } = useAuth()
+  const { login, register, authenticaded } = useAuth()
 
-  const onEnter = async (username: string, password: string) => {
-    try {
-      await login(username, password)
-      history.push('/home')
-    } catch (error) {
-      console.error(error)
-    }
+  if (authenticaded) {
+    return <Redirect to="/home" />
   }
 
   return (
@@ -44,7 +40,11 @@ const AuthPage = ({ history }: RouteComponentProps) => {
           tabProps={{ centered: true }}
           onTabChange={setActiveTab}
         >
-          {activeTab === LOGIN ? <LoginForm onEnter={onEnter} /> : <p>TODO</p>}
+          {activeTab === LOGIN ? (
+            <LoginForm onEnter={login} />
+          ) : (
+            <RegisterForm onRegister={register} />
+          )}
         </Card>
       </MainContainer>
     </PageContainer>
