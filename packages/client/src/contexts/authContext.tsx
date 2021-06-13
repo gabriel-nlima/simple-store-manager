@@ -7,6 +7,7 @@ import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../api/client'
 import usersApi from '../api/usersApi'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { User } from '../types'
+import message from 'antd/es/message'
 
 interface AuthState {
   authenticaded: boolean
@@ -62,9 +63,13 @@ const AuthProvider: React.FC = ({ children }) => {
   const login = useCallback(
     async (username: string, password: string) => {
       if (username !== '' && password !== '') {
-        const data = await authApi.login(username, password)
-        if (data) {
-          authenticateUser(data)
+        try {
+          const data = await authApi.login(username, password)
+          if (data) {
+            authenticateUser(data)
+          }
+        } catch (error) {
+          message.error('Credenciais inválidas.')
         }
       }
     },
@@ -73,9 +78,13 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const register = useCallback(
     async (newUser: User) => {
-      const data = await authApi.register(newUser)
-      if (data) {
-        authenticateUser(data)
+      try {
+        const data = await authApi.register(newUser)
+        if (data) {
+          authenticateUser(data)
+        }
+      } catch (error) {
+        message.error('Erro ao registrar usuário.')
       }
     },
     [authenticateUser]

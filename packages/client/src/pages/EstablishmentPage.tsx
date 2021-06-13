@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { MainContainer, PageContainer } from '../components/containers'
 import HeaderContent from './HeaderContent'
 import Card from 'antd/es/card'
@@ -14,11 +14,11 @@ import {
 } from '@ant-design/icons'
 import Button from 'antd/es/button'
 import Modal from 'antd/es/modal'
-import useDebounce from '../hooks/useDebounce'
-import { useCallback } from 'react'
 import EstablishmentForm from '../components/EstablishmentForm'
 import List from 'antd/es/list'
 import Popconfirm from 'antd/es/popconfirm'
+import message from 'antd/es/message'
+import useDebounce from '../hooks/useDebounce'
 
 const EstablishmentPage = () => {
   const [editing, setEditing] = useState<Establishment | undefined>(undefined)
@@ -57,8 +57,10 @@ const EstablishmentPage = () => {
       await searchEstablishments('')
       setEditing(undefined)
       setSearchString('')
+      message.info('Estabelecimento salvo.')
     } catch (error) {
       console.error(error)
+      message.error('Erro ao salvar estabelecimento.')
     }
   }
 
@@ -76,8 +78,10 @@ const EstablishmentPage = () => {
       await searchEstablishments('')
       setEditing(undefined)
       setSearchString('')
+      message.info('Estabelecimento removido.')
     } catch (error) {
       console.error(error)
+      message.error('Erro ao remover estabelecimento.')
     }
   }
 

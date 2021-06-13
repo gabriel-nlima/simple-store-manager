@@ -50,6 +50,8 @@ server.register(
     userDecorators(instance)
     establishmentDecorators(instance)
     // instance.get('/t', async (req, reply) => {
+    //   const a = await instance.mongo.db.collection('aa').find({})
+    //   a.for
     //   reply.badGateway()
     //   reply.unauthorized()
     // })
