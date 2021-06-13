@@ -6,19 +6,13 @@ import { Establishment } from '../types'
 import establishmentApi from '../api/establishment'
 import Row from 'antd/es/row'
 import Input from 'antd/es/input'
-import {
-  DeleteOutlined,
-  EditOutlined,
-  PlusOutlined,
-  SearchOutlined,
-} from '@ant-design/icons'
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import Button from 'antd/es/button'
 import Modal from 'antd/es/modal'
 import EstablishmentForm from '../components/EstablishmentForm'
-import List from 'antd/es/list'
-import Popconfirm from 'antd/es/popconfirm'
 import message from 'antd/es/message'
 import useDebounce from '../hooks/useDebounce'
+import ListEstablishments from '../components/ListEstablishments'
 
 const EstablishmentPage = () => {
   const [editing, setEditing] = useState<Establishment | undefined>(undefined)
@@ -54,6 +48,7 @@ const EstablishmentPage = () => {
       } else {
         await establishmentApi.create(data)
       }
+
       await searchEstablishments('')
       setEditing(undefined)
       setSearchString('')
@@ -105,27 +100,10 @@ const EstablishmentPage = () => {
               onClick={() => setEditing({} as Establishment)}
             />
           </Row>
-          <List
-            style={{ marginTop: 10 }}
-            dataSource={establishmentList}
-            renderItem={item => (
-              <List.Item key={item._id}>
-                <List.Item.Meta title={item.name} description={item.address} />
-                <Button
-                  onClick={onEdit(item._id!)}
-                  type="text"
-                  icon={<EditOutlined />}
-                />
-                <Popconfirm
-                  title="Você tem certeza?"
-                  onConfirm={onDelete(item._id!)}
-                  okText="Sim"
-                  cancelText="Não"
-                >
-                  <Button danger type="text" icon={<DeleteOutlined />} />
-                </Popconfirm>
-              </List.Item>
-            )}
+          <ListEstablishments
+            establishmentList={establishmentList}
+            onDelete={onDelete}
+            onEdit={onEdit}
           />
         </Card>
       </MainContainer>

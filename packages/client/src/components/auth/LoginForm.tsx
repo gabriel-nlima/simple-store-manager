@@ -38,7 +38,13 @@ const LoginForm = ({ onEnter }: LoginFormProps) => {
         />
       </Form.Item>
       <Form.Item>
-        <Button block disabled={disabled} onClick={save} type="primary">
+        <Button
+          block
+          disabled={disabled}
+          onClick={save}
+          htmlType="submit"
+          type="primary"
+        >
           Entrar
         </Button>
       </Form.Item>
