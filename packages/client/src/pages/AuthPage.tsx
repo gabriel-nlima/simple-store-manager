@@ -7,7 +7,7 @@ import {
   MainContainer,
   PageContainer,
 } from '../components/containers'
-import Logo from '../components/logo'
+import Logo from '../components/Logo'
 import { Redirect, RouteComponentProps } from 'react-router-dom'
 import RegisterForm from '../components/auth/RegisterForm'
 

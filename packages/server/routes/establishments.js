@@ -8,7 +8,7 @@ export default function establishmentRoutes(server, opts, next) {
       const { id } = request.params
       if (!id) return reply.badRequest()
 
-      const { establishment } = await server.getEstablishment(server)
+      const { establishment } = await server.getEstablishment(server, id)
       return reply.send(establishment)
     } catch (error) {
       server.log.error(error)
@@ -25,7 +25,6 @@ export default function establishmentRoutes(server, opts, next) {
         query = { $text: { $search: srchStr, $language: 'none' } }
       }
 
-      console.log(query)
       const { establishments } = await server.findEstablishments(server, query)
       return reply.send(establishments)
     } catch (error) {

@@ -6,13 +6,19 @@ import { Establishment } from '../types'
 import establishmentApi from '../api/establishment'
 import Row from 'antd/es/row'
 import Input from 'antd/es/input'
-import { EditOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons'
+import {
+  DeleteOutlined,
+  EditOutlined,
+  PlusOutlined,
+  SearchOutlined,
+} from '@ant-design/icons'
 import Button from 'antd/es/button'
 import Modal from 'antd/es/modal'
 import useDebounce from '../hooks/useDebounce'
 import { useCallback } from 'react'
 import EstablishmentForm from '../components/EstablishmentForm'
 import List from 'antd/es/list'
+import Popconfirm from 'antd/es/popconfirm'
 
 const EstablishmentPage = () => {
   const [editing, setEditing] = useState<Establishment | undefined>(undefined)
@@ -56,6 +62,25 @@ const EstablishmentPage = () => {
     }
   }
 
+  const onEdit = (id: string) => async () => {
+    try {
+      setEditing(await establishmentApi.load(id))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const onDelete = (id: string) => async () => {
+    try {
+      await establishmentApi.delete(id)
+      await searchEstablishments('')
+      setEditing(undefined)
+      setSearchString('')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <PageContainer>
       <HeaderContent />
@@ -83,10 +108,18 @@ const EstablishmentPage = () => {
               <List.Item key={item._id}>
                 <List.Item.Meta title={item.name} description={item.address} />
                 <Button
-                  onClick={() => setEditing(item)}
+                  onClick={onEdit(item._id!)}
                   type="text"
                   icon={<EditOutlined />}
                 />
+                <Popconfirm
+                  title="Você tem certeza?"
+                  onConfirm={onDelete(item._id!)}
+                  okText="Sim"
+                  cancelText="Não"
+                >
+                  <Button danger type="text" icon={<DeleteOutlined />} />
+                </Popconfirm>
               </List.Item>
             )}
           />
