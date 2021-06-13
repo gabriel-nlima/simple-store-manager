@@ -15,5 +15,19 @@ export default function usersRoutes(server, opts, next) {
     }
   })
 
+  server.put(userUrl('update'), async function (request, reply) {
+    try {
+      const user = request.body
+      if (!user._id) return reply.badRequest()
+
+      const { updated } = await server.updateUser(server, user)
+
+      return reply.send(updated)
+    } catch (error) {
+      server.log.error(error)
+      return reply.internalServerError()
+    }
+  })
+
   next()
 }

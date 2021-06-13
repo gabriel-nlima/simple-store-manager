@@ -10,8 +10,10 @@ import { jwtCustomMessages } from './consts.js'
 import authRoutes from './routes/auth.js'
 import authDecorators from './decorators/auth.js'
 import userDecorators from './decorators/database/user.js'
+import establishmentDecorators from './decorators/database/establishment.js'
 import tokenValidator from './hooks/auth.js'
 import usersRoutes from './routes/users.js'
+import establishmentRoutes from './routes/establishments.js'
 
 const server = Fastify({
   logger: {
@@ -46,6 +48,7 @@ server.register(
     // api decoratos
     authDecorators(instance)
     userDecorators(instance)
+    establishmentDecorators(instance)
     // instance.get('/t', async (req, reply) => {
     //   reply.badGateway()
     //   reply.unauthorized()
@@ -61,6 +64,7 @@ server.register(
 
       // secured routes
       secureInstance.register(usersRoutes)
+      secureInstance.register(establishmentRoutes)
       sNext()
     })
 

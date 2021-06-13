@@ -23,7 +23,20 @@ export async function createUser(server, data) {
   return { created, col }
 }
 
+export async function updateUser(server, data) {
+  const { db } = server.mongo
+  const col = await db.collection(server.collections.USERS)
+
+  if (!data._id || data._id === '') return { updated: null, col }
+
+  const updated = await server.update(col, { ...data })
+  delete updated.password
+
+  return { updated, col }
+}
+
 export default function userDecorators(server) {
   server.decorate('createUser', createUser)
   server.decorate('findUserByEmail', findUserByEmail)
+  server.decorate('updateUser', updateUser)
 }

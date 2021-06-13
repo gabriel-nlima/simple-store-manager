@@ -1,3 +1,6 @@
+import mongodb from 'mongodb'
+const { ObjectID } = mongodb
+
 export const COLLECTIONS = {
   USERS: 'users',
   ESTABLISHMENT: 'establishment',
@@ -16,7 +19,9 @@ export function beforeCreate(document) {
 }
 
 export function beforeUpdate(document) {
-  return { ...document, updatedAt: Date.now() }
+  const updated = { ...document, updatedAt: Date.now() }
+  delete updated._id
+  return updated
 }
 
 export async function create(collection, document) {
@@ -39,6 +44,11 @@ export async function initIndexes(db) {
     { email: 1 },
     { unique: true, background: true }
   )
+
+  await db.createIndex(COLLECTIONS.ESTABLISHMENT, {
+    name: 'text',
+    address: 'text',
+  })
 }
 
 export default function databaseDecorators(server) {
