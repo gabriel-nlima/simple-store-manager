@@ -8,16 +8,19 @@ export default function authRoutes(server, opts, next) {
     '/login',
     { schema: loginSchema },
     async function (request, reply) {
-      const { email, password } = request.body
+      const { username, password } = request.body
       try {
-        const { user } = await server.findUserByEmail(server, email)
+        const { user } = await server.findUserByEmail(server, username, false)
 
         if (!user) return reply.notFound()
 
         const isEqual = await server.comparePasswords(password, user.password)
         if (isEqual) {
           const tokens = await server.generateTokens(server, user.email)
-          return reply.send({ user, ...tokens })
+          return reply.send({
+            user: { ...user, password: undefined },
+            ...tokens,
+          })
         }
 
         return reply.badRequest()

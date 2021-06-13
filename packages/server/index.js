@@ -3,6 +3,7 @@ import fastifyHelmet from 'fastify-helmet'
 import fastifyJWT from 'fastify-jwt'
 import fastifyMongodb from 'fastify-mongodb'
 import fastifySensible from 'fastify-sensible'
+import fastifyCors from 'fastify-cors'
 import { userBodySchema } from './schemas/user.js'
 import databaseDecorators, {
   COLLECTIONS,
@@ -30,6 +31,7 @@ server.addSchema(userBodySchema)
 // plugins
 server.register(fastifySensible)
 server.register(fastifyHelmet)
+server.register(fastifyCors)
 server.register(fastifyJWT, {
   secret: 'sgessecret@2021',
 })
