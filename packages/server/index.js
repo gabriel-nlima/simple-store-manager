@@ -5,13 +5,8 @@ import fastifyMongodb from 'fastify-mongodb'
 import fastifySensible from 'fastify-sensible'
 import fastifyCors from 'fastify-cors'
 import { userBodySchema } from './schemas/user.js'
-import databaseDecorators, {
-  COLLECTIONS,
-  create,
-  update,
-  stringToId,
-  initIndexes,
-} from './decorators/database/base.js'
+import databaseDecorators, { initIndexes } from './decorators/database/base.js'
+import { jwtCustomMessages } from './consts.js'
 import authRoutes from './routes/auth.js'
 import authDecorators from './decorators/auth.js'
 import userDecorators from './decorators/database/user.js'
@@ -34,6 +29,7 @@ server.register(fastifyHelmet)
 server.register(fastifyCors)
 server.register(fastifyJWT, {
   secret: 'sgessecret@2021',
+  messages: jwtCustomMessages,
 })
 server.register(fastifyMongodb, {
   forceClose: true,
@@ -50,6 +46,10 @@ server.register(
     // api decoratos
     authDecorators(instance)
     userDecorators(instance)
+    // instance.get('/t', async (req, reply) => {
+    //   reply.badGateway()
+    //   reply.unauthorized()
+    // })
 
     // api routes
     instance.register(authRoutes)

@@ -9,6 +9,9 @@ export default function useLocalStorage<T>(
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       const item = localStorage.getItem(key)
+      if (item && typeof item === 'string') {
+        return item
+      }
       return item ? JSON.parse(item) : initialValue
     } catch (error) {
       console.error(error)
@@ -30,7 +33,11 @@ export default function useLocalStorage<T>(
           value instanceof Function ? value(valueRef.current) : value
 
         setStoredValue(valueToStore)
-        localStorage.setItem(key, JSON.stringify(valueToStore))
+        if (typeof valueToStore === 'string') {
+          localStorage.setItem(key, valueToStore)
+        } else {
+          localStorage.setItem(key, JSON.stringify(valueToStore))
+        }
       } catch (error) {
         console.warn(error)
       }

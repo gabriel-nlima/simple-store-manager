@@ -8,6 +8,7 @@ import {
   PageContainer,
 } from '../components/containers'
 import Logo from '../components/logo'
+import { RouteComponentProps } from 'react-router-dom'
 
 const LOGIN = 'LOGIN'
 const REGISTER = 'REGISTER'
@@ -16,13 +17,14 @@ const tablist: CardTabListType[] = [
   { key: REGISTER, tab: 'Registre-se' },
 ]
 
-const AuthPage = () => {
+const AuthPage = ({ history }: RouteComponentProps) => {
   const [activeTab, setActiveTab] = useState(LOGIN)
   const { login } = useAuth()
 
   const onEnter = async (username: string, password: string) => {
     try {
       await login(username, password)
+      history.push('/home')
     } catch (error) {
       console.error(error)
     }
