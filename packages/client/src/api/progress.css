@@ -1,0 +1,16 @@
+/* Altera a cor para o mesmo tom de azul do Ant Design */
+#nprogress .bar {
+  background: #4472fe;
+}
+#nprogress .peg {
+  box-shadow: 0 0 10px #4472fe, 0 0 5px #4472fe;
+}
+#nprogress .spinner-icon {
+  border-top-color: #4472fe;
+  border-left-color: #4472fe;
+}
+
+/* Oculta o spinner porque ele aparece sobre o botão de logout */
+#nprogress .spinner {
+  display: none;
+}
