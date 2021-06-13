@@ -30,7 +30,7 @@ const LoginForm = ({ onEnter }: LoginFormProps) => {
           placeholder="Digite seu nome de usuário"
         />
       </Form.Item>
-      <Form.Item label="Nome de usuário">
+      <Form.Item label="Senha">
         <Input.Password
           onChange={onChangePassword}
           value={password}

@@ -6,7 +6,7 @@ interface LogoProps {
 }
 
 const LogoText = styled.span<LogoProps>`
-  font-size: ${props => (props.size === 'lg' ? '86px' : '24px')};
+  font-size: ${props => (props.size === 'lg' ? '86px' : '18px')};
   font-style: italic;
   font-weight: 700;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;

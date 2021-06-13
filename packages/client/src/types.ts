@@ -17,7 +17,9 @@ export interface UserWithTokens extends User {
 
 export interface Establishment extends Base {
   name: string
-  local: string
+  address: string
+  userId?: string
+  cep?: string
   phone?: string
   type?: string
 }

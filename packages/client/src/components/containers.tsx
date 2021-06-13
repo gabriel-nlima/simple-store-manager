@@ -7,20 +7,19 @@ export const PageContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 5px;
   overflow: hidden;
 `
 
 export const HeaderContainer = styled.header`
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 5px;
 `
 
 export const MainContainer = styled.section`
   height: 100%;
-  flex: 1;
+  min-width: 275px;
+  flex: 2;
   overflow: hidden auto;
-  padding: 5px;
 `
