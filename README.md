@@ -8,7 +8,7 @@ Este é um monorepo feito com [Lerna](https://github.com/lerna/lerna).
 
 ## Requisitos
 
--   [Nodejs v12+](https://nodejs.org)
+-   [Nodejs v13+](https://nodejs.org)
 -   [MongoDB](https://www.mongodb.com/try/download/community)
 
 ## Instalação
@@ -16,8 +16,9 @@ Este é um monorepo feito com [Lerna](https://github.com/lerna/lerna).
 ```bash
 cd simple-store-manager
 npm i
-npx lerna bootstrap
 ```
+
+Também é excecutado `npm lerna bootstrap` que baixa os pacotes do frontend e backend.
 
 ## Execução
 
@@ -25,12 +26,7 @@ npx lerna bootstrap
 
 Inicia o frontend e backend no localhost, portas 3000 e 8080 respectivamente.
 
-```bash
- cd simple-store-manager
- npm start
-```
-
-Ou inicie individualmente com dois terminais:
+Inicie individualmente com dois terminais:
 
 ```bash
  cd simple-store-manager/packages/client
@@ -44,7 +40,23 @@ Ou inicie individualmente com dois terminais:
 
 ### Produção
 
+Gera uma build de produção do frontend (`npm run build -> react-scripts build`) e copia os arquivos para a pasta `./public` no servidor. O servidor serve de host do frontend.
+
 ```bash
  cd simple-store-manager
- npm run start:prod
+ npm run start-prod
 ```
+
+## Outras bibliotecas
+
+### Frontend
+
+-   [Ant Design](https://ant.design/)
+-   [Axios](https://github.com/axios/axios)
+-   [React Router](https://reactrouter.com/web/guides/quick-start)
+
+### Backend
+
+-   [Fastify JWT](https://github.com/fastify/fastify-jwt)
+-   [bcrypt](https://github.com/dcodeIO/bcrypt.js#readme)
+-   [shx](https://github.com/shelljs/shx#readme)
