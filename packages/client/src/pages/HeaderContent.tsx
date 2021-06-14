@@ -48,7 +48,7 @@ const HeaderContent = () => {
       }}
     >
       <Logo size="xs" />
-      <Dropdown overlay={menu(handleMenuClick)}>
+      <Dropdown overlay={menu(handleMenuClick)} trigger={['hover', 'click']}>
         <Button>
           {user.name}
           <UserOutlined />

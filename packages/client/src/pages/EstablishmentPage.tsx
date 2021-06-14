@@ -9,10 +9,10 @@ import Input from 'antd/es/input'
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import Button from 'antd/es/button'
 import Modal from 'antd/es/modal'
-import EstablishmentForm from '../components/EstablishmentForm'
+import EstablishmentForm from '../components/establishment/EstablishmentForm'
 import message from 'antd/es/message'
 import useDebounce from '../hooks/useDebounce'
-import ListEstablishments from '../components/ListEstablishments'
+import ListEstablishments from '../components/establishment/ListEstablishments'
 
 const EstablishmentPage = () => {
   const [editing, setEditing] = useState<Establishment | undefined>(undefined)

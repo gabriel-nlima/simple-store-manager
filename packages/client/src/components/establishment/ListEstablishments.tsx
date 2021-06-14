@@ -1,5 +1,5 @@
 import React from 'react'
-import { Establishment } from '../types'
+import { Establishment } from '../../types'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import Button from 'antd/es/button'
 import List from 'antd/es/list'

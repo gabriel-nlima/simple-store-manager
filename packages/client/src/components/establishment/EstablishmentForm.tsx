@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Form from 'antd/es/form'
 import Input from 'antd/es/input'
 import Button from 'antd/es/button'
-import { Establishment } from '../types'
+import { Establishment } from '../../types'
 import { useEffect } from 'react'
 
 interface EstablishmentFormProps {

@@ -22,3 +22,5 @@ node_modules
 /packages/client/npm-debug.log*
 /packages/client/yarn-debug.log*
 /packages/client/yarn-error.log*
+
+packages/server/public/
