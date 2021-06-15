@@ -6,8 +6,6 @@ import fastifySensible from 'fastify-sensible'
 import fastifyStatic from 'fastify-static'
 import fastifyCors from 'fastify-cors'
 import path from 'path'
-import crypto from 'crypto'
-import { userBodySchema } from './schemas/user.js'
 import databaseDecorators, { initIndexes } from './decorators/database/base.js'
 import { jwtCustomMessages } from './consts.js'
 import authRoutes from './routes/auth.js'
@@ -29,9 +27,6 @@ const server = Fastify({
     prettyPrint: true,
   },
 })
-
-// shared schemas
-server.addSchema(userBodySchema)
 
 // plugins
 server.register(fastifySensible)

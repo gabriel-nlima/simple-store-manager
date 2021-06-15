@@ -14,7 +14,7 @@ const authApi = {
         username,
         password,
       })
-      console.log(response)
+
       return response.data
     } catch (error) {
       throw error
@@ -26,7 +26,7 @@ const authApi = {
         '/register',
         user
       )
-      console.log(response)
+
       return response.data
     } catch (error) {
       throw error
