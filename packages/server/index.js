@@ -55,16 +55,10 @@ databaseDecorators(server)
 
 server.register(
   function (instance, opts, next) {
-    // api decoratos
+    // api decorators
     authDecorators(instance)
     userDecorators(instance)
     establishmentDecorators(instance)
-    // instance.get('/t', async (req, reply) => {
-    //   const a = await instance.mongo.db.collection('aa').find({})
-    //   a.for
-    //   reply.badGateway()
-    //   reply.unauthorized()
-    // })
 
     // api routes
     instance.register(authRoutes)
@@ -85,10 +79,10 @@ server.register(
   { prefix: '/api' }
 )
 
+// arquivos da build de produção do frontend
 server.register(fastifyStatic, {
   root: path.join(__dirname, 'public'),
 })
-
 server.get('*', function (req, reply) {
   reply.sendFile('index.html')
 })

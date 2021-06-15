@@ -1,6 +1,7 @@
 import { TOKEN_INVALID } from '../consts.js'
 
 export default function tokenValidator(server) {
+  // roda em toda request para validar o usuário
   server.addHook('preValidation', async (request, reply) => {
     await request.jwtVerify()
 

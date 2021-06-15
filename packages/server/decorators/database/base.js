@@ -39,12 +39,14 @@ export async function update(collection, document) {
 }
 
 export async function initIndexes(db) {
+  // index para garantir e-mails unicos
   await db.createIndex(
     COLLECTIONS.USERS,
     { email: 1 },
     { unique: true, background: true }
   )
 
+  // index para pesquisa de texto do mongodb
   await db.createIndex(COLLECTIONS.ESTABLISHMENT, {
     name: 'text',
     address: 'text',

@@ -19,7 +19,7 @@ export async function findEstablishments(server, query) {
   const establishments = []
   const cursor = await col.find(query, {
     projection,
-    sort: { name: 1 }, // ordena em ordem alfabetica pelo nome e relevância da pesquisa
+    sort: { name: 1 }, // ordena em ordem alfabetica pelo nome
   })
 
   await cursor.forEach(i => {

@@ -18,11 +18,11 @@ export async function comparePasswords(original, hashed) {
 export async function generateTokens(server, email) {
   const accessToken = await server.jwt.sign(
     { username: email },
-    { expiresIn: '1h' }
+    { expiresIn: '4h' }
   )
   const refreshToken = await server.jwt.sign(
     { username: email, refresh: true },
-    { expiresIn: '4h' }
+    { expiresIn: '8h' }
   )
   return { accessToken, refreshToken }
 }
