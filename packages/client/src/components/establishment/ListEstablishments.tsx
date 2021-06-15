@@ -5,7 +5,6 @@ import {
   EditOutlined,
   StarFilled,
   StarOutlined,
-  StarTwoTone,
 } from '@ant-design/icons'
 import Button from 'antd/es/button'
 import List from 'antd/es/list'

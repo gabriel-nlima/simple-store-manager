@@ -15,6 +15,8 @@ import useDebounce from '../hooks/useDebounce'
 import ListEstablishments from '../components/establishment/ListEstablishments'
 import { useAuth } from '../contexts/authContext'
 import usersApi from '../api/usersApi'
+import FavsList from '../components/establishment/FavsList'
+import { HeadingBordered } from '../components/Heading'
 
 const EstablishmentPage = () => {
   const [editing, setEditing] = useState<Establishment | undefined>(undefined)
@@ -37,7 +39,7 @@ const EstablishmentPage = () => {
       setUser(await usersApi.updateMe({ favorites: favs }))
       message.info('Favorito salvo.')
     } catch (error) {
-      message.error('Não foi possível salvar este favorito')
+      message.error('Não foi possível salvar este favorito.')
       console.error(error)
     }
   }
@@ -106,7 +108,13 @@ const EstablishmentPage = () => {
       <HeaderContent />
       <MainContainer>
         <Card title="Estabelecimentos">
-          <Row justify="space-between" gutter={16} align="middle" wrap={false}>
+          <Row
+            justify="space-between"
+            gutter={16}
+            align="middle"
+            style={{ marginBottom: 5, padding: '0px 8px' }}
+            wrap={false}
+          >
             <Input
               placeholder="Buscar estabelecimentos"
               value={searchString}
@@ -121,6 +129,18 @@ const EstablishmentPage = () => {
               onClick={() => setEditing({} as Establishment)}
             />
           </Row>
+          {debouncedSearch === '' && (
+            <>
+              <HeadingBordered>Favoritos</HeadingBordered>
+              <FavsList
+                favorites={establishmentList.filter(item =>
+                  favorites.includes(item._id!)
+                )}
+                onEdit={onEdit}
+              />
+            </>
+          )}
+          <HeadingBordered>Todos os estabelecimentos</HeadingBordered>
           <ListEstablishments
             establishmentList={establishmentList}
             onDelete={onDelete}
