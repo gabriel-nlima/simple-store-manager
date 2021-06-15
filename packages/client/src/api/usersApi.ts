@@ -11,8 +11,15 @@ const usersApi = {
       throw error
     }
   },
-  updateUser: async (user: User) => {
-    // TODO
+  updateMe: async (fields: { [x: string]: any }) => {
+    try {
+      const { data } = await api.put<User | undefined>(`${USERS_URL}/me`, {
+        fields,
+      })
+      return data
+    } catch (error) {
+      throw error
+    }
   },
 }
 

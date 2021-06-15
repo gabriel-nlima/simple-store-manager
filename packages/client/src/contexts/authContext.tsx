@@ -15,6 +15,7 @@ interface AuthState {
   register: (newUser: User) => Promise<void>
   logout: () => void
   user?: User
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>
 }
 
 const AuthContext = React.createContext<AuthState | undefined>(undefined)
@@ -99,7 +100,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, authenticaded, login, register, logout }}
+      value={{ user, authenticaded, login, register, logout, setUser }}
     >
       {children}
     </AuthContext.Provider>

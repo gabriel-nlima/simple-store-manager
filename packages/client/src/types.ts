@@ -8,6 +8,7 @@ export interface User extends Base {
   email: string
   name: string
   password?: string
+  favorites?: string[]
 }
 
 export interface UserWithTokens extends User {

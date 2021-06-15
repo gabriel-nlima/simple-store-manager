@@ -6,7 +6,6 @@ export default function tokenValidator(server) {
 
     try {
       const { username } = request.user
-      console.log(request.user)
       if (username) {
         const { user } = await server.findUserByEmail(server, username)
 

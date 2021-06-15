@@ -15,6 +15,27 @@ export default function usersRoutes(server, opts, next) {
     }
   })
 
+  server.put(userUrl('me'), async function (request, reply) {
+    try {
+      const { user } = await server.findUserByEmail(
+        server,
+        request.user.username
+      )
+
+      const { fields } = request.body
+
+      const { updated } = await server.updateUser(server, {
+        ...user,
+        ...fields,
+      })
+
+      return reply.send(updated)
+    } catch (error) {
+      server.log.error(error)
+      return reply.internalServerError()
+    }
+  })
+
   server.put(userUrl('update'), async function (request, reply) {
     try {
       const user = request.body

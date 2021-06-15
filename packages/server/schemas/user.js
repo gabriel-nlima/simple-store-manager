@@ -28,6 +28,7 @@ export const userBodySchema = S.object()
   .required()
   .prop('_id', S.string())
   .prop('password', S.string())
+  .prop('favorites', S.array())
 
 export const registerSchema = S.object()
   .prop('body', S.ref('#userBody').required())

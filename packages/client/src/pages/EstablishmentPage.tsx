@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useMemo } from 'react'
 import { MainContainer, PageContainer } from '../components/containers'
 import HeaderContent from './HeaderContent'
 import Card from 'antd/es/card'
@@ -13,6 +13,8 @@ import EstablishmentForm from '../components/establishment/EstablishmentForm'
 import message from 'antd/es/message'
 import useDebounce from '../hooks/useDebounce'
 import ListEstablishments from '../components/establishment/ListEstablishments'
+import { useAuth } from '../contexts/authContext'
+import usersApi from '../api/usersApi'
 
 const EstablishmentPage = () => {
   const [editing, setEditing] = useState<Establishment | undefined>(undefined)
@@ -20,6 +22,25 @@ const EstablishmentPage = () => {
   const [establishmentList, setEstablishmentList] = useState<Establishment[]>(
     []
   )
+
+  const { user, setUser } = useAuth()
+  const favorites = useMemo(() => user?.favorites || [], [user?.favorites])
+
+  const setFavorites = (favoriteId: string) => async () => {
+    try {
+      let favs = [...favorites]
+      if (favs.includes(favoriteId)) {
+        favs = favs.filter(fav => fav !== favoriteId)
+      } else {
+        favs.push(favoriteId)
+      }
+      setUser(await usersApi.updateMe({ favorites: favs }))
+      message.info('Favorito salvo.')
+    } catch (error) {
+      message.error('Não foi possível salvar este favorito')
+      console.error(error)
+    }
+  }
 
   // aguarda 0.75 segundo depois que o usuário digita para pesquisar estabelecimentos
   const debouncedSearch = useDebounce(searchString, 750)
@@ -104,6 +125,8 @@ const EstablishmentPage = () => {
             establishmentList={establishmentList}
             onDelete={onDelete}
             onEdit={onEdit}
+            setFavorites={setFavorites}
+            favorites={favorites}
           />
         </Card>
       </MainContainer>

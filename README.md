@@ -18,7 +18,7 @@ cd simple-store-manager
 npm i
 ```
 
-Também é excecutado `npm lerna bootstrap` que baixa os pacotes do frontend e backend.
+Também é excecutado `npx lerna bootstrap` que baixa os pacotes do frontend e backend.
 
 ## Execução
 
