@@ -1,6 +1,6 @@
 import React from 'react'
 import { HeaderContainer } from '../components/containers'
-import Logo from '../components/Logo'
+import Logo from '../components/MainLogo'
 import { useAuth } from '../contexts/authContext'
 import Dropdown from 'antd/es/dropdown'
 import Menu from 'antd/es/menu'

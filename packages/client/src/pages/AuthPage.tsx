@@ -7,9 +7,9 @@ import {
   MainContainer,
   PageContainer,
 } from '../components/containers'
-import Logo from '../components/Logo'
 import { Redirect } from 'react-router-dom'
 import RegisterForm from '../components/auth/RegisterForm'
+import Logo from '../components/MainLogo'
 
 const LOGIN = 'LOGIN'
 const REGISTER = 'REGISTER'
