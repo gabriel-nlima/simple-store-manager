@@ -83,7 +83,7 @@ Alguns hooks customizados do react.
 
 -   ./pages:
 
-Componentes de páginas do app, contém lógicas, navegação, chamada pra APIs e afins.
+Componentes de páginas do app, contém lógicas, navegação, chamada para APIs e afins.
 
 ./packages/server:
 
@@ -125,3 +125,10 @@ Entry file do servidor, setta configurações, inicializa plugins, decorators, h
 -   [Fastify JWT](https://github.com/fastify/fastify-jwt)
 -   [bcrypt](https://github.com/dcodeIO/bcrypt.js#readme)
 -   [shx](https://github.com/shelljs/shx#readme)
+
+## Imagens
+
+![Interface do SGES - Login](assets/Screenshot_24.png)
+![Interface do SGES - Estabelecimentos](assets/Screenshot_25.png)
+![Interface do SGES - Busca estabelecimentos](assets/Screenshot_26.png)
+![Interface do SGES - Editar estabelecimento](assets/Screenshot_27.png)
