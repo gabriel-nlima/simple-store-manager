@@ -1,7 +1,4 @@
-import React from 'react'
-import { useEffect } from 'react'
-import { useCallback } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useCallback, useContext, useState } from 'react'
 import authApi, { AuthResponse } from '../api/authApi'
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../api/client'
 import usersApi from '../api/usersApi'
@@ -20,6 +17,7 @@ interface AuthState {
 
 const AuthContext = React.createContext<AuthState | undefined>(undefined)
 
+// https://kentcdodds.com/blog/how-to-use-react-context-effectively
 const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User | undefined>()
   const [authenticaded, setAuthenticaded] = useState(false)
@@ -106,9 +104,9 @@ const AuthProvider: React.FC = ({ children }) => {
     </AuthContext.Provider>
   )
 }
-
+// torna o usuário atual e suas funções disponíveis para toda a aplicação
 function useAuth() {
-  const context = React.useContext(AuthContext)
+  const context = useContext(AuthContext)
   if (context === undefined) {
     throw new Error('useAuth must be used within a AuthContext')
   }

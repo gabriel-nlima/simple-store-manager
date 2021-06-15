@@ -8,7 +8,7 @@ import {
   PageContainer,
 } from '../components/containers'
 import Logo from '../components/Logo'
-import { Redirect, RouteComponentProps } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import RegisterForm from '../components/auth/RegisterForm'
 
 const LOGIN = 'LOGIN'
@@ -18,7 +18,7 @@ const tablist: CardTabListType[] = [
   { key: REGISTER, tab: 'Registre-se' },
 ]
 
-const AuthPage = ({ history }: RouteComponentProps) => {
+const AuthPage = () => {
   const [activeTab, setActiveTab] = useState(LOGIN)
   const { login, register, authenticaded } = useAuth()
 

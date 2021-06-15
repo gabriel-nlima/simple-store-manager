@@ -26,11 +26,12 @@ const api = axios.create({
 
 api.interceptors.request.use(
   config => {
+    // anexa o token de acesso em todas as requisições dessa instância do axios
     const token = localStorage.getItem(ACCESS_TOKEN_KEY)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
-    start()
+    start() // inicia a barra de progresso
     return config
   },
   err => {
@@ -45,9 +46,8 @@ api.interceptors.response.use(
     return response
   },
   error => {
-    console.log(error.response)
     // remove o token em caso de erro de acesso
-    // o router vai notar a ausencia do token e redirecionar para login
+    // requisições causaram erros e na próxima navegação redireciona para login
     if (
       error.response.status === 401 &&
       authMessages.findIndex(v => v.startsWith(error.response.data.message))
