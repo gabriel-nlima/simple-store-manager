@@ -129,7 +129,7 @@ const EstablishmentPage = () => {
               onClick={() => setEditing({} as Establishment)}
             />
           </Row>
-          {debouncedSearch === '' && (
+          {debouncedSearch === '' && favorites.length > 0 && (
             <>
               <HeadingBordered>Favoritos</HeadingBordered>
               <FavsList
